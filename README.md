@@ -1,6 +1,6 @@
 # onebacon.de
 
-## Source code of Front- and Backend of https://onebacon.de
+## Source code: Front / Backend of https://onebacon.de
 
-Running nginx reverse proxy
-Three.js for graphics
+- Running nginx reverse proxy
+- Three.js for graphics
