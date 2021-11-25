@@ -52,6 +52,17 @@ function render(time) {
 
     context.bodys.forEach((e) => context.scene.add(e))
 
+    const eval_str = "THREE." + io.shape()
+    try{
+        const geo = eval(eval_str)
+        if (! (context.bodys[0].geometry instanceof geo)){
+            context.bodys[0].geometry = new geo(1,1,1,120)
+        }
+    }
+    catch{
+        console.error("Shape evaluation failed for: '"+io.shape()+"'\nwith eval_str='"+eval_str+"'")
+    }
+
     context.bodys[0].scale.x = io.width()
     context.bodys[0].scale.y = io.height()
     context.bodys[0].scale.z = io.depth()
@@ -69,7 +80,7 @@ function render(time) {
 
 window.context = context
 window.io = io
-
+window.THREE = THREE
 
 
 setup()
