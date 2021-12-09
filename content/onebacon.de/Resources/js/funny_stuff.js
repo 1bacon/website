@@ -46,21 +46,38 @@ function setup(){
     context.scene.add(context.light);
 }
 
+function geo_factory(name){
+    const eval_str = "THREE." + name
+    switch(name){
+        case "CylinderGeometry":
+            return new THREE.CylinderGeometry(1,1,1,50)
+        case "BoxGeometry":
+            return new THREE.BoxGeometry(1,1,1)
+        case "ConeGeometry":
+            return new THREE.ConeGeometry(2,1,50)
+        case "PlaneGeometry":
+            return new THREE.PlaneGeometry(1,1,2,3)
+        default:
+            throw Error("Unsupported Shape passed: '"+ name +"'")
+    }
+}
+
 function render(time) {
     time *= 0.001;
     resizeRendererIfSizeChanged(renderer, context)
 
     context.bodys.forEach((e) => context.scene.add(e))
 
-    const eval_str = "THREE." + io.shape()
+    const name = io.shape()
+    const eval_str = "THREE." + name
     try{
         const geo = eval(eval_str)
         if (! (context.bodys[0].geometry instanceof geo)){
-            context.bodys[0].geometry = new geo(1,1,1,120)
+            context.bodys[0].geometry = geo_factory(name)
         }
     }
-    catch{
-        console.error("Shape evaluation failed for: '"+io.shape()+"'\nwith eval_str='"+eval_str+"'")
+    catch (e){
+        console.error("Shape evaluation failed for: '"+io.shape()+"'\nwith eval_str='"+eval_str+"'\n"+e)
     }
 
     context.bodys[0].scale.x = io.width()
