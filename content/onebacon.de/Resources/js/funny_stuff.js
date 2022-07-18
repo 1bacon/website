@@ -69,15 +69,13 @@ function render(time) {
     context.bodys.forEach((e) => context.scene.add(e))
 
     const name = io.shape()
-    const eval_str = "THREE." + name
     try{
-        const geo = eval(eval_str)
-        if (! (context.bodys[0].geometry instanceof geo)){
+        if (! (context.bodys[0].geometry.type == name)){
             context.bodys[0].geometry = geo_factory(name)
         }
     }
     catch (e){
-        console.error("Shape evaluation failed for: '"+io.shape()+"'\nwith eval_str='"+eval_str+"'\n"+e)
+        console.error("Shape evaluation failed for: '"+io.shape()+"'\n"+e)
     }
 
     context.bodys[0].scale.x = io.width()
